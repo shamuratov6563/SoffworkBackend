@@ -42,10 +42,12 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
 ]
 
 CUSTOM_APPS = [
     "apps.common",
+    "users",
 ]
 
 THIRD_PARTY_APPS = [
@@ -184,3 +186,6 @@ CELERY_TIMEZONE = "Asia/Tashkent"
 
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+
+AUTH_USER_MODEL = 'users.User'

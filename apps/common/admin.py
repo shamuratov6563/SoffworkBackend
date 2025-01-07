@@ -3,6 +3,7 @@ from .models import *
 
 # Register your models here.
 
+
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'created_at')
@@ -49,3 +50,12 @@ class LikeAdmin(admin.ModelAdmin):
     list_display = ('id', 'portfolio')
     list_filter = ('portfolio',)
 
+
+# admin.site.register(Kwork)
+# admin.site.register(Category_select)
+# admin.site.register(OneCategory)
+# admin.site.register(Prices_and_Services)
+# admin.site.register(Extra_options)
+# admin.site.register(Attach_files)
+# admin.site.register(Description_and_files)
+# admin.site.register(Frequently_Asked_Questions)

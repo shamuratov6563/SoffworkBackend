@@ -26,11 +26,9 @@ class UserAPIView(generics.ListAPIView):
 class ConfirmEmailView(APIView):
         def post(self, request, *args, **kwargs):
             user_id = request.data.get('user_id')
-            confirmation_code = request.data.get('confirmation_code')
-            print(user_id)
-            print(confirmation_code)
+            confirmation_code = request.data.get('code')
             try:
-                user = User.objects.get(id=int(user_id))
+                user = User.objects.get(id=str(user_id))
             except (User.DoesNotExist, ValueError):
                 return Response({"error": "Foydalanuvchi mavjud emas!"}, status=status.HTTP_400_BAD_REQUEST)
             cached_code = cache.get(f"confirmation_code_{user.email}")
@@ -42,9 +40,10 @@ class ConfirmEmailView(APIView):
                 return Response({"error": "Tasdiqlash kodi noto'g'ri!"}, status=status.HTTP_400_BAD_REQUEST)
 
             user = User.objects.get(id=user_id)
+            user.auth_status = 'confirmed'
             user.save()
             # token jwt generate
-            return Response({"success"})
+            return Response(data=user.tokens(), status=status.HTTP_200_OK)
         
 
         

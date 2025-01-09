@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
 from django.core.validators import RegexValidator
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserCustomManager(BaseUserManager):
     use_in_migrations = True
@@ -78,7 +79,12 @@ class User(AbstractUser):
             self.auth_status = 'pending'
         super(User, self).save(*args, **kwargs)
 
-
+def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        }
 
 
 

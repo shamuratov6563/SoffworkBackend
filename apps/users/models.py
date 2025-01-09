@@ -45,6 +45,7 @@ class User(AbstractUser):
         regex=r"^9\d{12}$",
         message='Enter a valid phone number'
     )
+
     AUTH_ROLE = (
         ('buyer', 'buyer'),
         ('seller','seller'),
@@ -62,9 +63,20 @@ class User(AbstractUser):
     image = models.ImageField(upload_to='project/',null=True)
     email = models.EmailField(blank=True, validators=[_validate_email])
     wallet = models.PositiveIntegerField(null=True, default=0)
-    confirmation_code = models.CharField(max_length=6, null=True, blank=True) 
     email_confirmed = models.BooleanField(default=False)
 
+    AUTH_STATUS = (
+        ('pending', 'pending'),
+        ('confirmed', 'confirmed'),
+    )
+    auth_status = models.CharField(max_length=20, choices=AUTH_STATUS, default='pending')
+
+    def save(self, *args, **kwargs):
+        if self.email_confirmed:
+            self.auth_status = 'confirmed'
+        else:
+            self.auth_status = 'pending'
+        super(User, self).save(*args, **kwargs)
 
 
 

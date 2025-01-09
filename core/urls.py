@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from users.views import UserView, ConfirmEmailView
+from apps.users.views import UserView, ConfirmEmailView, UserAPIView
 
 from .schema import swagger_urlpatterns
 
@@ -12,6 +12,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/v1/user', UserView.as_view()),
     path('api/v1/confirm_email/', ConfirmEmailView.as_view()),
+    path('api/v1/list', UserAPIView.as_view()),
 
     # JWT auth urls
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

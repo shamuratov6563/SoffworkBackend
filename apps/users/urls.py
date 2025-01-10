@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import UserView, ConfirmEmailView, UserAPIView
+from .views import UserRegisterAPIView, ConfirmEmailView, UserListAPIView
 
 urlpatterns = [
-    path('api/v1/user', UserView.as_view()),
-    path('api/v1/confirm_email/', ConfirmEmailView.as_view()),
-    path('api/v1/list', UserAPIView.as_view()),
+    path('api/v1/register/', UserRegisterAPIView.as_view()),
+    path('api/v1/confirm/', ConfirmEmailView.as_view()),
+    path('api/v1/list/', UserListAPIView.as_view()),
 ]

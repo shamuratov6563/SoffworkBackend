@@ -3,7 +3,7 @@ from django.core.cache import cache
 from rest_framework import serializers
 import re
 from .models import User
-from .utils import send_confirmation_code_to_user, generate_confirmation_code
+from .utils import send_confirmation_code_to_user, generate_confirmation_code, send_verification_code_to_user
 
 
 def is_phone(phone):
@@ -53,11 +53,11 @@ class UserSerializer(serializers.Serializer):
         user.set_password(password)
         user.save()
         confirmation_code = generate_confirmation_code()
-        cache.set(f"confirmation_code_{user.email}", confirmation_code, timeout=300)
+        cache.set(f"confirmation_code_{user.id}", confirmation_code, timeout=300)
         if auth_type == 'email':
             send_confirmation_code_to_user(user, confirmation_code)
-            # elif auth_type == 'phone_number':
-        #     send_verification_code_to_user(user, confirmation_code)
+        elif auth_type == 'phone_number':
+            send_verification_code_to_user(user, confirmation_code)
 
         return user
 
@@ -65,3 +65,8 @@ class UserSerializer(serializers.Serializer):
         return {
             'user_id': instance.id
         }
+
+
+class ConfirmationCodeSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    code = serializers.CharField()

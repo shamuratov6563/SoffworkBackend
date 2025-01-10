@@ -8,12 +8,12 @@ from .utils import send_confirmation_code_to_user, generate_confirmation_code, s
 
 def is_phone(phone):
     phone_regex = r"^\+998\d{9}$"
-    return re.match(phone_regex, phone) is not None
+    return bool(re.match(phone_regex, phone))
 
 
 def is_email(email):
     email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-    return re.match(email_regex, email) is not None
+    return bool(re.match(email_regex, email))
 
 
 class UserSerializer(serializers.Serializer):
@@ -38,16 +38,14 @@ class UserSerializer(serializers.Serializer):
         password = validated_data.get('password')
         auth_type = validated_data.get('auth_type')
 
+        username = phone_or_email
         if auth_type == 'phone_number':
-            username = phone_or_email
             user, created = User.objects.get_or_create(phone_number=phone_or_email)
-        elif auth_type == 'email':
-            username = phone_or_email
+        else:
             user, created = User.objects.get_or_create(email=phone_or_email)
 
             if not created and user.auth_status == 'confirmed':
-                raise ValidationError(
-                    "Foydalanuvchi allaqachon mavjud. Iltimos, boshqa telefon raqami yoki email kiriting.")
+                raise ValidationError(detail={'phone_or_email': "Bunday foydalanuvchi allaqachon mavjud"})
 
         user.username = username
         user.set_password(password)
@@ -57,7 +55,7 @@ class UserSerializer(serializers.Serializer):
         if auth_type == 'email':
             send_confirmation_code_to_user(user, confirmation_code)
         elif auth_type == 'phone_number':
-            send_verification_code_to_user(user, confirmation_code)
+            send_verification_code_to_user(user.phone_number, confirmation_code)
 
         return user
 

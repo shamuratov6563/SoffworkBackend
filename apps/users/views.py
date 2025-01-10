@@ -28,17 +28,22 @@ class ConfirmEmailView(APIView):
         try:
             user = User.objects.get(id=str(user_id))
         except (User.DoesNotExist, ValueError):
-            return Response({"error": "Foydalanuvchi mavjud emas!"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Bunday foydalanuvchi mavjud emas!"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         cached_code = cache.get(f"confirmation_code_{user.id}")
 
         if not cached_code:
             return Response({"error": "Tasdiqlash kodi muddati o'tgan yoki mavjud emas."})
 
         if cached_code != confirmation_code:
-            return Response({"error": "Tasdiqlash kodi noto'g'ri!"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Tasdiqlash kodi noto'g'ri!"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        user = User.objects.get(id=user_id)
         user.auth_status = 'confirmed'
         user.save()
-        return Response(data=user.tokens(), status=status.HTTP_200_OK)
+        return Response(data=user.tokens(), status=status.HTTP_201_CREATED)
 

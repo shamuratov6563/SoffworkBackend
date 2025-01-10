@@ -20,3 +20,6 @@ def send_confirmation_code_to_user(user, code):
         print(f"Error while sending email: {str(e)}")
 
 
+def send_verification_code_to_user(user, code):
+    print(f"Verification code: {str(code)}")
+    

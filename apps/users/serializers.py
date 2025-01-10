@@ -3,17 +3,15 @@ from django.core.cache import cache
 from rest_framework import serializers
 import re
 from .models import User
-from .utils import send_confirmation_code_to_user, generate_confirmation_code
+from .utils import send_confirmation_code_to_user, generate_confirmation_code, send_verification_code_to_user
 
 def isphone(phone):
     phone_regex = r"^\+998\d{9}$" 
     return re.match(phone_regex, phone) is not None
 
-
 def isemail(email):
     email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
     return re.match(email_regex, email) is not None
-
 
 class UserSerializer(serializers.Serializer):
     phone_or_email = serializers.CharField() 
@@ -45,16 +43,15 @@ class UserSerializer(serializers.Serializer):
             if not created and user.auth_status == 'confirmed':
                 raise ValidationError(
                 "Foydalanuvchi allaqachon mavjud. Iltimos, boshqa telefon raqami yoki email kiriting.")
-
         user.username = username  
         user.set_password(password)
         user.save()
         confirmation_code = generate_confirmation_code()
-        cache.set(f"confirmation_code_{user.email}", confirmation_code, timeout=300)
+        cache.set(f"confirmation_code_{user.id}", confirmation_code, timeout=300)
         if auth_type == 'email':
             send_confirmation_code_to_user(user, confirmation_code)  
-        # elif auth_type == 'phone_number':
-        #     send_verification_code_to_user(user, confirmation_code)
+        elif auth_type == 'phone_number':
+            send_verification_code_to_user(user, confirmation_code)
 
         return user
     
@@ -63,6 +60,9 @@ class UserSerializer(serializers.Serializer):
             'user_id': instance.id
         }
 
-    
+class ConfirmationCodeSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    code = serializers.CharField()
 
-    
+
+

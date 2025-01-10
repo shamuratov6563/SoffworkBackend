@@ -78,8 +78,8 @@ class User(AbstractUser):
         else:
             self.auth_status = 'pending'
         super(User, self).save(*args, **kwargs)
-
-def tokens(self):
+    
+    def tokens(self):
         refresh = RefreshToken.for_user(self)
         return {
             "refresh": str(refresh),

@@ -1,8 +1,10 @@
 django
 # psycopg2-binary
+pillow
 python-environ
 django-cors-headers
 django-jazzmin
 drf-yasg
 djangorestframework
 django-filter
+djangorestframework-simplejwt

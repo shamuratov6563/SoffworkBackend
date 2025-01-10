@@ -165,7 +165,7 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'yourdatabasename.db'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -204,7 +204,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "static"
-# STATICFILES_DIRS = (BASE_DIR / "staticfiles",)
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -242,8 +241,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'dearkamoliddin@gmail.com'  
-EMAIL_HOST_PASSWORD = 'mfgy rvbi ocph ojbs' 
+EMAIL_HOST_USER = 'dearkamoliddin@gmail.com'
+EMAIL_HOST_PASSWORD = 'mfgy rvbi ocph ojbs'
 
 CACHES = {
     'default': {

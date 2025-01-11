@@ -48,10 +48,14 @@ class UserSerializer(serializers.Serializer):
                 raise ValidationError(detail={'phone_or_email': "Bunday foydalanuvchi allaqachon mavjud"})
 
         user.username = username
+        user.auth_type = auth_type
+        user.auth_role = "seller"
         user.set_password(password)
         user.save()
         confirmation_code = generate_confirmation_code()
         cache.set(f"confirmation_code_{user.id}", confirmation_code, timeout=300)
+        print(confirmation_code)
+        print(cache.get(f"confirmation_code_{user.id}"))
         if auth_type == 'email':
             send_confirmation_code_to_user(user, confirmation_code)
         elif auth_type == 'phone_number':
@@ -64,7 +68,14 @@ class UserSerializer(serializers.Serializer):
             'user_id': instance.id
         }
 
-
 class ConfirmationCodeSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
-    code = serializers.CharField()
+    code = serializers.IntegerField()
+
+class ResetPasswordSerializer(serializers.Serializer):
+    phone_or_email = serializers.CharField()
+    
+class VerifyResetPassword(serializers.Serializer):
+    password_one = serializers.CharField()
+    password_two = serializers.CharField()
+

@@ -1,20 +1,10 @@
 from django.contrib import admin
 
-from .models import User
+from apps.users import models
 
-
-admin.site.register(User)
-
-
-
-# from .models import *
-#  Register your models here.
-
-# @admin.register(User)
-# class User(admin.ModelAdmin):
-#     list_display = ('full_name', 'username',)
-#     search_fields = ('full_name', 'username',)
-#     list_filter = ('username',)
+@admin.register(models.User)
+class User(admin.ModelAdmin):
+    list_display = ('id', 'username', 'auth_type', 'auth_status', 'auth_role')
 
 
 

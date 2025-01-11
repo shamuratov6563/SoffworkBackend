@@ -1,6 +1,7 @@
 django
 # psycopg2-binary
 pillow
+requests
 python-environ
 django-cors-headers
 django-jazzmin

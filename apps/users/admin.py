@@ -6,5 +6,5 @@ from apps.users import models
 class User(admin.ModelAdmin):
     list_display = ('id', 'username', 'auth_type', 'auth_status', 'auth_role')
 
-
+admin.site.register(UserProfile)
 

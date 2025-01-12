@@ -2,7 +2,8 @@ from rest_framework.exceptions import ValidationError
 from django.core.cache import cache
 from rest_framework import serializers
 import re
-from .models import User,UserProfile
+from .models import User
+from .models import UserProfile
 from .utils import send_confirmation_code_to_user, generate_confirmation_code, send_verification_code_to_user
 
 
@@ -80,8 +81,8 @@ class VerifyResetPassword(serializers.Serializer):
     password_two = serializers.CharField()
 
 
-class UserProfileSerializer(serializers.Serializer):
-    class Meta: 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
         model = UserProfile
-        fields = "__all__"
+        fields = '__all__' 
 

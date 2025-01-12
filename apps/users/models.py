@@ -51,35 +51,59 @@ class User(AbstractUser):
         ('buyer', 'buyer'),
         ('seller','seller'),
     )
-    
     AUTH_TYPE = (
         ('email', 'email'),
         ('phone_number', 'phone_number'),
     )
+    first_name = None
+    last_name = None
+    bio = models.TextField(null=True, blank=True)
+    auth_role = models.CharField(max_length=255, choices=AUTH_ROLE)
+    auth_type = models.CharField(max_length=20, choices=AUTH_TYPE)
+    phone_number = models.CharField(max_length=13, null=True, blank=True)
+    image = models.ImageField(upload_to='project/',null=True)
+    email = models.EmailField(blank=True, validators=[_validate_email])
+    wallet = models.PositiveIntegerField(null=True, default=0)
+    email_confirmed = models.BooleanField(default=False)
 
     AUTH_STATUS = (
         ('pending', 'pending'),
         ('confirmed', 'confirmed'),
     )
-
-    first_name = None
-    last_name = None
-    bio = models.TextField(null=True, blank=True)
-    auth_role = models.CharField(max_length=255, choices=AUTH_ROLE, default='buyer')
-    auth_type = models.CharField(max_length=20, choices=AUTH_TYPE)
-    phone_number = models.CharField(max_length=13, null=True, blank=True)
-    image = models.ImageField(upload_to='media/user_images', null=True, blank=True)
-    email = models.EmailField(blank=True, validators=[_validate_email])
-    wallet = models.PositiveIntegerField(null=True, default=0)
     auth_status = models.CharField(max_length=20, choices=AUTH_STATUS, default='pending')
-    
-    def tokens(self):
+
+    def save(self, *args, **kwargs):
+        if self.email_confirmed:
+            self.auth_status = 'confirmed'
+        else:
+            self.auth_status = 'pending'
+        super(User, self).save(*args, **kwargs)
+
+def tokens(self):
         refresh = RefreshToken.for_user(self)
         return {
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         }
 
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE )
+    name = models.CharField(max_length=255, blank=True, null=True)
+    photo = models.ImageField(upload_to='profile_photos/', blank=True, null=True)
+    specialization = models.CharField(max_length=255, blank=True, null=True)
+    about = models.TextField(blank=True, null=True, max_length=1000)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    profile_header = models.ImageField(upload_to='profile_headers/', blank=True, null=True)
+    
+
+    def str(self):
+        return self.name
+
+        
+    
 
 
 

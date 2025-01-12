@@ -10,4 +10,7 @@ urlpatterns = [
     path('reset_password_finish/', views.ConfirmPasswordView.as_view()),
     path('users-list/', views.UserListAPIView.as_view()),
     path('users-update/', views.UserUpdateAPIView.as_view(), name='user-update'),
+    path('profile-list/', views.UserProfileAPIView.as_view(), name='profile-list'),
+    path('profile-update/', views.UserProfileUpdateAPIView.as_view(), name='profile-update'),
+
 ]

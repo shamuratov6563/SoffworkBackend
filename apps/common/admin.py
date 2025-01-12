@@ -7,13 +7,13 @@ from .models import *
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'created_at')
+    list_display = ('id', 'name',)
     search_fields = ('name',)
 
 
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'country', 'created_at')
+    list_display = ('id', 'country', )
     search_fields = ('country',)
 
 
@@ -25,14 +25,14 @@ class SellerSkillAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'reply_to', 'body', 'created_at')
+    list_display = ('id', 'reply_to', 'body',)
     search_fields = ('body',)
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'parent', 'created_at')
-    search_fields = ('title',)
+# @admin.register(Category)
+# class CategoryAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'name',)
+#     search_fields = ('name',)
 
 
 @admin.register(Portfolio)

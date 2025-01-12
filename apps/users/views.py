@@ -7,9 +7,11 @@ from django.core.cache import cache
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from . import serializers 
-from .models import User
+from .models import User, UserProfile
 from .serializers import is_email, is_phone
 from .utils import send_confirmation_code_to_user, generate_confirmation_code, send_verification_code_to_user
+from .models import UserProfile  
+from .serializers import UserProfileSerializer
 
 
 class UserRegisterAPIView(generics.CreateAPIView):
@@ -196,3 +198,43 @@ class ConfirmPasswordView(APIView):
 class UserUpdateAPIView(generics.UpdateAPIView):
     serializer_class = serializers.UserSerializer
     queryset = User.objects.all()
+
+
+
+class UserProfileAPIView(generics.UpdateAPIView):
+    serializer_class = serializers.UserProfileSerializer
+    queryset = UserProfile.objects.all()
+    
+class UserProfileUpdateAPIView(generics.UpdateAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+
+
+#     # views.py
+# from rest_framework import generics
+# from .models import Category, Service
+# from .serializers import CategorySerializer, ServiceSerializer
+
+# # List and Create Categories
+# class CategoryListCreateView(generics.ListCreateAPIView):
+#     queryset = Category.objects.all()
+#     serializer_class = CategorySerializer
+
+# # Retrieve, Update, and Delete a Category by Slug
+# class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Category.objects.all()
+#     serializer_class = CategorySerializer
+#     lookup_field = 'slug'
+
+# # List and Create Services
+# class ServiceListCreateView(generics.ListCreateAPIView):
+#     queryset = Service.objects.all()
+#     serializer_class = ServiceSerializer
+
+# # Retrieve, Update, and Delete a Service by Slug
+# class ServiceDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Service.objects.all()
+#     serializer_class = ServiceSerializer
+#     lookup_field = 'slug'
+

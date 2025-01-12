@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 
 # #PORTFOLIO
@@ -32,9 +34,9 @@ from django.db import models
 class Extra_options(models.Model):
     title = models.CharField(max_length=40)
     hour = [(i, '$' + str(i)) for i in range(1, 240, 3)]
-    price_of_1_kwork = models.IntegerField(choices=hour, default='$1')
+    price_of_1_kwork = models.IntegerField(choices=hour, default='1')
     days = [(i, str(i) + ' days') for i in range(0, 11)]
-    delivery = models.IntegerField(choices=days, default='0 days')
+    delivery = models.IntegerField(choices=days, default='0')
     description = models.CharField(max_length=100)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -86,10 +88,10 @@ class Comment(BaseModel):
 
 #Buyer
 
-class Category(BaseModel):
+class Category():
     title = models.CharField(max_length=250)
     image = models.ImageField(upload_to='2_project/', null=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Kwork(models.Model):
@@ -126,3 +128,46 @@ class PortfolioPriceOption(BaseModel):
 
 class Like(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.PROTECT)
+
+
+
+# IT  
+
+class Category(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    description = models.TextField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def str(self):
+        return self.name
+
+
+class Service(models.Model):
+    category = models.ForeignKey(Category, related_name='services', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    description = models.TextField()
+    image = models.ImageField(upload_to='service_images/')
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def str(self):
+        return self.name
+
+
+
+
+
+
+
+
+

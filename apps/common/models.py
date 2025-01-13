@@ -20,7 +20,7 @@ class Seller(BaseModel):
     country = models.CharField(max_length=250)
     about = models.TextField()
 
-
+    
 class SellerSkill(models.Model):
     seller = models.ForeignKey(Seller,on_delete=models.PROTECT)
     skill = models.ForeignKey(Skill,on_delete=models.PROTECT)
@@ -62,8 +62,28 @@ class PortfolioPriceOption(BaseModel):
 
 class Like(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.PROTECT)
+    
+    
+    
+    
+
     #user = models.ForeignKey(User,on_delete=models.PROTECT) 
  
+
+
+
+#  user account uchun model
+
+
+class User(models.Model):
+    name = models.CharField(max_length=100)
+    user_banner = models.ImageField(upload_to=...)
+    user_photo = models.ImageField(upload_to=...)
+    user_info = models.TextField()
+    location = models.CharField(max_length=200)
+    # location = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    created_at = models.ForeignKey(BaseModel,on_delete=models.CASCADE)
+
 
 
 

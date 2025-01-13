@@ -17,8 +17,8 @@ class UserAccountSerializer(serializers.ModelSerializer):
             
 class SellerKworksPriceSerializer(serializers.ModelSerializer):
         class Meta():
-            model = models.PortfolioPrice
-            fields = ('price')        
+            model = models.KworkExtraOption
+            fields = ('price_of_kwork')        
             
             
 class SellersKworksListSerializers(serializers.ModelSerializer):

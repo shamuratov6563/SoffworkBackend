@@ -1,5 +1,5 @@
 from django.shortcuts import render
-<<<<<<< HEAD
+
 from django.shortcuts import render
 from rest_framework import generics
 from . import models, serializers
@@ -27,12 +27,12 @@ class SellersKworksListAPIView(generics.RetrieveUpdateAPIView):
     
     
     
-=======
-from rest_framework.views import APIView
-from .serializer import *
-from .models import *
 
-class Digital_serviceView(APIView):
-    queryset=Digital_service.objects.all()
-    serializer_class=Digital_serviceSerializer
->>>>>>> ed0023e70e6e62cda9ef0e814b79ce2b305eedd6
+# from rest_framework.views import APIView
+# from .serializer import *
+# from .models import *
+
+# class Digital_serviceView(APIView):
+#     queryset=Digital_service.objects.all()
+#     serializer_class=Digital_serviceSerializer
+

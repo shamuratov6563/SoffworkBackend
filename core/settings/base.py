@@ -37,7 +37,6 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 DJANGO_APPS = [
-    'django_ckeditor_5',
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -58,6 +57,8 @@ THIRD_PARTY_APPS = [
     "drf_yasg",
     "corsheaders",
     'rest_framework_simplejwt',
+    "django_ckeditor_5",
+
 
 ]
 

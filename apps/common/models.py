@@ -8,9 +8,6 @@ from django_ckeditor_5.fields import CKEditor5Field
 
 class Skill(BaseModel):
     name = models.CharField(max_length=250)
-
-
-<<<<<<< HEAD
 class Seller(BaseModel):
  #   user = models.ForeignKey(User, on_delete=models.PROTECT)
     country = models.CharField(max_length=250)
@@ -30,8 +27,6 @@ class Comment(BaseModel):
 
 #Buyer
 
-=======
->>>>>>> ed0023e70e6e62cda9ef0e814b79ce2b305eedd6
 class Category(BaseModel):
     title = models.CharField(max_length=250)
     image = models.ImageField(upload_to='categories/', null=True)
@@ -100,7 +95,6 @@ class PortfolioFile(BaseModel):
 
 
 
-<<<<<<< HEAD
 class Like(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.PROTECT)
     
@@ -109,23 +103,20 @@ class Like(models.Model):
     
 
     #user = models.ForeignKey(User,on_delete=models.PROTECT) 
- 
-=======
->>>>>>> ed0023e70e6e62cda9ef0e814b79ce2b305eedd6
+
 
 
 
 #  user account uchun model
 
 
-class User(models.Model):
+class User(BaseModel):
     name = models.CharField(max_length=100)
     user_banner = models.ImageField(upload_to=...)
     user_photo = models.ImageField(upload_to=...)
     user_info = models.TextField()
     location = models.CharField(max_length=200)
     # location = models.ForeignKey(Seller, on_delete=models.CASCADE)
-    created_at = models.ForeignKey(BaseModel,on_delete=models.CASCADE)
 
 
 

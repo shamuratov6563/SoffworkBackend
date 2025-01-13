@@ -1,6 +1,7 @@
 # from django.contrib import admin
 # from .models import *
 
+<<<<<<< HEAD
 # # Register your models here.
 
 # @admin.register(Skill)
@@ -27,6 +28,14 @@
 # class CategoryAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'title', 'parent', 'created_at')
 #     search_fields = ('title',)
+=======
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name',)
+    search_fields = ('name',)
+
+>>>>>>> ed0023e70e6e62cda9ef0e814b79ce2b305eedd6
 
 # @admin.register(Portfolio)
 # class PortfolioAdmin(admin.ModelAdmin):
@@ -34,6 +43,7 @@
 #     search_fields = ('title',)
 #     list_filter = ('seller',)
 
+<<<<<<< HEAD
 # @admin.register(PortfolioPrice)
 # class PortfolioPriceAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'portfolio', 'type', 'price', 'deadline')
@@ -48,4 +58,9 @@
 # class LikeAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'portfolio')
 #     list_filter = ('portfolio',)
+=======
+
+admin.site.register(Kwork)
+admin.site.register(Category)
+>>>>>>> ed0023e70e6e62cda9ef0e814b79ce2b305eedd6
 

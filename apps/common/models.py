@@ -1,20 +1,16 @@
 from django.db import models
+from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
-
-class Meta:
-    abstract = True
-
-class BaseModel(models.Model):  
-    created_at = models.DateTimeField(auto_now_add=True)
-
+from apps.users.models import User, BaseModel
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Skill(BaseModel):
     name = models.CharField(max_length=250)
-    
 
 
+<<<<<<< HEAD
 class Seller(BaseModel):
  #   user = models.ForeignKey(User, on_delete=models.PROTECT)
     country = models.CharField(max_length=250)
@@ -34,32 +30,77 @@ class Comment(BaseModel):
 
 #Buyer
 
+=======
+>>>>>>> ed0023e70e6e62cda9ef0e814b79ce2b305eedd6
 class Category(BaseModel):
     title = models.CharField(max_length=250)
-    image = models.ImageField(upload_to='2_project/',null=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='categories/', null=True)
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True, blank=True
+    )
+    order = models.IntegerField(default=1)
 
 
-class Portfolio(models.Model):
-    title = models.CharField(max_length=200)
-    poster = models.CharField(max_length=250)
-    body = models.TextField()
-    seller = models.ForeignKey(Seller,on_delete=models.CASCADE)
+class ServiceType(BaseModel):
+    title = models.CharField(max_length=250)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
-class PortfolioPrice(models.Model):
-    type = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits = 100, decimal_places = 100)
-    portfolio = models.ForeignKey(Portfolio,on_delete=models.CASCADE)
-    deadline = models.IntegerField()
+class Kwork(models.Model):
+    class KworkStatus(models.TextChoices):
+        ACTIVE = 'active', _('Active')
+        MODERATION = 'moderation', _('Moderation')
+        CANCELED = 'canceled', _('Canceled')
+        DELETED = 'deleted', _('Deleted')
+    title = models.CharField(max_length=70)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    cover_image = models.ImageField(upload_to='kwork_posters/')
+    description = CKEditor5Field('Description', config_name='extends')
+    order_requirements = CKEditor5Field('Order requirements', config_name='extends')
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50, choices=KworkStatus.choices, default=KworkStatus.MODERATION)
 
 
-class PortfolioPriceOption(BaseModel):
-    option = models.CharField(max_length= 200)
-    portfolio_price = models.ForeignKey(PortfolioPrice,on_delete=models.CASCADE)
+class KworkFeedback(BaseModel):
+    kwork = models.ForeignKey(Kwork, on_delete=models.CASCADE)
+    admin = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+
+
+class KworkServiceType(BaseModel):
+    kwork = models.ForeignKey(Kwork, on_delete=models.CASCADE)
+    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
+
+
+class KworkFile(BaseModel):
+    kwork = models.ForeignKey(Kwork, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='kwork_files/')
+
+
+class KworkExtraOption(BaseModel):
+    scopes = models.TextField(verbose_name="Scopes")
+    price_of_kwork = models.DecimalField(max_digits=100, decimal_places=100)
+    delivery_time = models.IntegerField()
+    description = models.TextField(null=True)
+
+
+class Portfolio(BaseModel):
+    title = models.CharField(max_length=250)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='portfolios')
+    cover_image = models.ImageField(upload_to='cover_images/')
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class PortfolioFile(BaseModel):
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='portfolio_files/')
+    service_type = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
 
 
 
+<<<<<<< HEAD
 class Like(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.PROTECT)
     
@@ -69,6 +110,8 @@ class Like(models.Model):
 
     #user = models.ForeignKey(User,on_delete=models.PROTECT) 
  
+=======
+>>>>>>> ed0023e70e6e62cda9ef0e814b79ce2b305eedd6
 
 
 

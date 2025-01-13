@@ -11,14 +11,14 @@ class HireFreelancerSerializer(serializers.ModelSerializer):
 class UserAccountSerializer(serializers.ModelSerializer):
         class Meta():
             model = models.User 
-            fields = ('first_name','last_name','bio','image','banner')
+            fields = ('name','user_info','user_photo','user_banner',)
             
             
             
 class SellerKworksPriceSerializer(serializers.ModelSerializer):
         class Meta():
             model = models.KworkExtraOption
-            fields = ('price_of_kwork')        
+            fields = ('price_of_kwork',)        
             
             
 class SellersKworksListSerializers(serializers.ModelSerializer):
@@ -26,7 +26,7 @@ class SellersKworksListSerializers(serializers.ModelSerializer):
         
         class Meta():
             model = models.Portfolio
-            fields = ('title','poster')
+            fields = ('title','cover_image','kworks_price',)
                 
 
             

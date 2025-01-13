@@ -3,11 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
 from apps.common import views
-from pathlib import Path
-from path import Path
-import os.path
-
-
+from django.urls import path
 
 
 
@@ -30,7 +26,6 @@ urlpatterns = [
     # JWT auth urls
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path("ckeditor5/", include('django_ckeditor_5.urls')),
 
 ]
 

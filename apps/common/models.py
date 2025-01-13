@@ -112,8 +112,8 @@ class Like(models.Model):
 
 class User(BaseModel):
     name = models.CharField(max_length=100)
-    user_banner = models.ImageField(upload_to=...)
-    user_photo = models.ImageField(upload_to=...)
+    user_banner = models.ImageField(upload_to='banner/')
+    user_photo = models.ImageField(upload_to="user_photo/")
     user_info = models.TextField()
     location = models.CharField(max_length=200)
     # location = models.ForeignKey(Seller, on_delete=models.CASCADE)

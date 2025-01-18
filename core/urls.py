@@ -1,25 +1,19 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from apps.common import views
 from django.urls import path
 
-
-
 from .schema import swagger_urlpatterns
 
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-    # path('api/users/', include('users.urls')),
-    path('user-account/', views.UserAccountAPIView.as_view()),
-    path('kkworks-list/',views.SellersKworksListAPIView.as_view()),
-    path('hire-freelancer',views.HireFreelancerAPIView.as_view()),
-    
-    
+    path('user-account/<int:pk>', views.UserAccountAPIView.as_view()),
+    path('kworks/', views.SellersKworkListAPIView.as_view()),
 
     path('auth/', include('apps.users.urls')),
 
@@ -28,7 +22,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 ]
-
 
 urlpatterns += swagger_urlpatterns
 

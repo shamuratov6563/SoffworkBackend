@@ -2,12 +2,6 @@ from rest_framework import serializers
 from . import models
 
 
-class UserAccountSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.User
-        fields = "__all__"
-
-
 class SellerKworkPriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.KworkExtraOption

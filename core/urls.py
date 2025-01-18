@@ -12,10 +12,12 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-    path('user-account/<int:pk>', views.UserAccountAPIView.as_view()),
-    path('kworks/', views.SellersKworkListAPIView.as_view()),
+    path('api/v1/common/', include('apps.common.urls')),
+
+
 
     path('auth/', include('apps.users.urls')),
+
 
     # JWT auth urls
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

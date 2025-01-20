@@ -200,3 +200,5 @@ class UserUpdateAPIView(generics.UpdateAPIView):
 class UserAccountAPIView(generics.RetrieveAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserAccountSerializer
+
+

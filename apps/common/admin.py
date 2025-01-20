@@ -9,6 +9,13 @@ class SkillAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Kwork)
-admin.site.register(Category)
+
+@admin.register(Category)
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'slug', 'parent', 'order')
+    list_filter = ('parent',)
+    search_fields = ('title',)
+    prepopulated_fields = {'slug': ('title',)}
 
 

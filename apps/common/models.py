@@ -10,7 +10,7 @@ class Skill(BaseModel):
     name = models.CharField(max_length=250)
 
     
-class SellerSkill(models.Model):
+class SellerSkill(BaseModel):
     seller = models.ForeignKey(User, on_delete=models.PROTECT)
     skill = models.ForeignKey(Skill, on_delete=models.PROTECT)
 
@@ -47,7 +47,7 @@ class ServiceType(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='service_types')
 
 
-class Kwork(models.Model):
+class Kwork(BaseModel):
     class KworkStatus(models.TextChoices):
         ACTIVE = 'active', _('Active')
         MODERATION = 'moderation', _('Moderation')

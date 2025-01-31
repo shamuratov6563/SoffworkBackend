@@ -1,63 +1,69 @@
 from django.contrib import admin
 from .models import *
 
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'slug', 'parent', 'order')
+    list_filter = ('parent',)
+    search_fields = ('title',)
+    prepopulated_fields = {'slug': ('title',)}
 
-# # Register your models here.
+@admin.register(Kwork)
+class KworkAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'category', 'seller', 'status', 'created_at')
+    list_filter = ('status', 'category', 'seller')
+    search_fields = ('title', 'description')
+    list_editable = ('status',)
 
-# @admin.register(Skill)
-# class SkillAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'name', 'created_at')
-#     search_fields = ('name',)
-
-# @admin.register(Seller)
-# class SellerAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'country', 'created_at')
-#     search_fields = ('country',)
-
-# @admin.register(SellerSkill)
-# class SellerSkillAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'seller', 'skill')
-#     list_filter = ('seller',)
-
-# @admin.register(Comment)
-# class CommentAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'reply_to', 'body', 'created_at')
-#     search_fields = ('body',)
-
-# @admin.register(Category)
-# class CategoryAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'title', 'parent', 'created_at')
-#     search_fields = ('title',)
-
+@admin.register(Portfolio)
+class PortfolioAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'category', 'seller', 'cover_image')
+    list_filter = ('category', 'seller')
+    search_fields = ('title', 'description')
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name',)
+    list_display = ('id', 'name')
     search_fields = ('name',)
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'commentator', 'body', 'kwork', 'created_at')
+    list_filter = ('commentator', 'kwork')
+    search_fields = ('body',)
 
-# @admin.register(Portfolio)
-# class PortfolioAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'title', 'seller',)
-#     search_fields = ('title',)
-#     list_filter = ('seller',)
+@admin.register(SellerSkill)
+class SellerSkillAdmin(admin.ModelAdmin):
+    list_display = ('id', 'seller', 'skill')
+    search_fields = ('seller__username', 'skill__name')
 
-# @admin.register(PortfolioPrice)
-# class PortfolioPriceAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'portfolio', 'type', 'price', 'deadline')
-#     list_filter = ('portfolio',)
+@admin.register(ServiceType)
+class ServiceTypeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'category')
+    list_filter = ('category',)
+    search_fields = ('title',)
 
-# @admin.register(PortfolioPriceOption)
-# class PortfolioPriceOptionAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'option', 'portfolio_price')
-#     list_filter = ('portfolio_price',)
+@admin.register(KworkFeedback)
+class KworkFeedbackAdmin(admin.ModelAdmin):
+    list_display = ('id', 'kwork', 'admin', 'text', 'created_at')
+    search_fields = ('text',)
 
-# @admin.register(Like)
-# class LikeAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'portfolio')
-#     list_filter = ('portfolio',)
+@admin.register(KworkFile)
+class KworkFileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'kwork', 'file')
+    search_fields = ('file',)
 
-admin.site.register(Kwork)
-admin.site.register(Category)
+@admin.register(PortfolioFile)
+class PortfolioFileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'portfolio', 'file', 'service_type')
+    search_fields = ('file',)
 
+@admin.register(Like)
+class LikeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'portfolio', 'user')
+    search_fields = ('user__username', 'portfolio__title')
 
+@admin.register(KworkExtraOption)
+class KworkExtraOptionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'scopes', 'price_of_kwork', 'delivery_time')
+    search_fields = ('scopes',)

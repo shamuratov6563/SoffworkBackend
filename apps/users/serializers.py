@@ -2,6 +2,8 @@ from rest_framework.exceptions import ValidationError
 from django.core.cache import cache
 from rest_framework import serializers
 import re
+from rest_framework import generics
+from . import models
 from .models import User
 from .utils import send_confirmation_code_to_user, generate_confirmation_code, send_verification_code_to_user
 
@@ -68,15 +70,29 @@ class UserSerializer(serializers.Serializer):
             'user_id': instance.id
         }
 
+
 class ConfirmationCodeSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
     code = serializers.IntegerField()
 
+
 class ResetPasswordSerializer(serializers.Serializer):
     phone_or_email = serializers.CharField()
-    
+
+
 class VerifyResetPassword(serializers.Serializer):
     password_one = serializers.CharField()
     password_two = serializers.CharField()
 
+
+class UserAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = "__all__"
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = "__all__"
 

@@ -11,4 +11,6 @@ urlpatterns = [
     path('users-list/', views.UserListAPIView.as_view()),
     path('users-update/', views.UserUpdateAPIView.as_view(), name='user-update'),
 
+    path('user-account/<int:pk>', views.UserAccountAPIView.as_view()),
+
 ]

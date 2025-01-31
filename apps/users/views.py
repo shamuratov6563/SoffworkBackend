@@ -6,7 +6,7 @@ from rest_framework import status
 from django.core.cache import cache
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from . import serializers 
+from . import serializers, models
 from .models import User
 from .serializers import is_email, is_phone
 from .utils import send_confirmation_code_to_user, generate_confirmation_code, send_verification_code_to_user
@@ -195,3 +195,10 @@ class ConfirmPasswordView(APIView):
 class UserUpdateAPIView(generics.UpdateAPIView):
     serializer_class = serializers.UserSerializer
     queryset = User.objects.all()
+
+
+class UserAccountAPIView(generics.RetrieveAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserAccountSerializer
+
+

@@ -15,9 +15,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 
     # path('api/users/', include('users.urls')),
-    path('user-account/', views.UserAccountAPIView.as_view()),
-    path('kkworks-list/',views.SellersKworksListAPIView.as_view()),
-    path('hire-freelancer',views.HireFreelancerAPIView.as_view()),
+    path('user-account/<int:pk>/', views.UserAccountAPIView.as_view()),
+    path('kworks-list/<int:pk>/',views.SellersKworksListAPIView.as_view()),
+    path('hire-freelancer/<int:pk>/',views.HireFreelancerAPIView.as_view()),
     
     
 

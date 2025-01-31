@@ -22,11 +22,11 @@ class SellerKworksPriceSerializer(serializers.ModelSerializer):
             
             
 class SellersKworksListSerializers(serializers.ModelSerializer):
-        kworks_price = SellerKworksPriceSerializer(many=False)
+        kworks_price = SerializerMethodField()
         
         class Meta():
             model = models.Portfolio
-            fields = ('title','cover_image','kworks_price',)
+            fields = ['title','cover_image','kworks_price']
                 
 
             

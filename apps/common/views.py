@@ -11,7 +11,7 @@ from rest_framework.views import Response
 
 
 
-class HireFreelancerAPIView(generics.ListAPIView):
+class HireFreelancerAPIView(generics.RetrieveUpdateAPIView):
     queryset = models.Seller.objects.all()
     serializer_class = serializers.HireFreelancerSerializer
     

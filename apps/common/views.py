@@ -105,3 +105,37 @@ class KworkViewSet(viewsets.ModelViewSet):
     queryset = Kwork.objects.all()
     serializer_class = KworkSerializer
     permission_classes = [IsAuthenticated]
+    
+    
+    
+    
+#  field for custom permissions
+
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
+from .models import Portfolio
+from .serializers import PortfolioSerializer
+from .permissions import IsPortfolioOwnerOrSuperuser,IsCommentOwnerOrSuperuser 
+
+
+class PortfolioViewSet(viewsets.ModelViewSet):
+    queryset = Portfolio.objects.all()
+    serializer_class = SellersKworkListSerializers
+    permission_classes = [IsAuthenticated, IsPortfolioOwnerOrSuperuser]  # Apply custom permission
+
+    def perform_create(self, serializer):
+        # Set the seller to the logged-in user when creating a portfolio
+        serializer.save(seller=self.request.user)
+        
+        
+        
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated, IsCommentOwnerOrSuperuser]  
+
+    def perform_create(self, serializer):
+        
+        serializer.save(commentator=self.request.user)
+

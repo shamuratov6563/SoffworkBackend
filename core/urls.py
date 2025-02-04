@@ -12,18 +12,17 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-<<<<<<< HEAD
+
     # path('api/users/', include('users.urls')),
     path('user-account/<int:pk>/', views.UserAccountAPIView.as_view()),
     path('kworks-list/<int:pk>/',views.SellersKworksListAPIView.as_view()),
     path('hire-freelancer/<int:pk>/',views.HireFreelancerAPIView.as_view()),
     
     
-=======
+
     path('api/v1/common/', include('apps.common.urls')),
 
 
->>>>>>> 86749fad1f7d3b036ccb7a3e74843ac3d4445fbe
 
     path('auth/', include('apps.users.urls')),
 

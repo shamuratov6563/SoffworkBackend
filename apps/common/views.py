@@ -6,7 +6,6 @@ from .serializers import *
 
 
 
-<<<<<<< HEAD
 
 class HireFreelancerAPIView(generics.RetrieveUpdateAPIView):
     queryset = models.Seller.objects.all()
@@ -18,12 +17,12 @@ class UserAccountAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = serializers.UserAccountSerializer
     
     
-class SellersKworksListAPIView(generics.RetrieveUpdateAPIView):
-=======
+
+
 class SellersKworkListAPIView(generics.ListAPIView):
->>>>>>> 86749fad1f7d3b036ccb7a3e74843ac3d4445fbe
+
     queryset = models.Portfolio.objects.all()
-    serializer_class = SellersKworkListSerializers
+    serializer_class = SellersKworksListSerializers
 
 
 

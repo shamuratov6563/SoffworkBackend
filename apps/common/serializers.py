@@ -23,14 +23,7 @@ class SellerKworksPriceSerializer(serializers.ModelSerializer):
             model = models.KworkExtraOption
             fields = ('price_of_kwork',)        
             
-            
-class SellersKworksListSerializers(serializers.ModelSerializer):
-        kworks_price = SerializerMethodField()
-        
-        class Meta():
-            model = models.Portfolio
-            fields = ['title','cover_image','kworks_price']
-                
+
 
 
 class SellerKworkPriceSerializer(serializers.ModelSerializer):
@@ -45,6 +38,7 @@ class SellerKworkPriceSerializer(serializers.ModelSerializer):
 
 class SellersKworkListSerializers(serializers.ModelSerializer):
     kwork_price = serializers.SerializerMethodField()
+    kworks_likes = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Portfolio
@@ -115,3 +109,17 @@ class KworkFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.KworkFile
         fields = '__all__'
+        
+        
+        
+        
+            
+class SellersKworksListSerializers(serializers.ModelSerializer):
+        likes = serializers.SerializerMethodField()
+    
+        class Meta():
+            model = models.Portfolio
+            fields = ['title','cover_image','kworks_price','likes',]
+        
+        def get_likes(self, obj):
+            return obj.likes.count()
